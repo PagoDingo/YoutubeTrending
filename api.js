@@ -31,8 +31,8 @@ function getYouTubeTrending() {
                 //again, like, brackets were missing.
                 //and then I made use of the videoId and like, plugged it back into the metaData
                 (videoMeta.slice(videoMeta.length - 4, videoMeta.length) != "}}}}") ?
-                    trending.push(Object.assign(videoMeta.parse(videoMeta + "}"), {"videoId": videoId})) :
-                    trending.push(Object.assign(videoMeta.parse(videoMeta), {"videoId": videoId}))
+                    trending.push(Object.assign(JSON.parse(videoMeta + "}"), {"videoId": videoId})) :
+                    trending.push(Object.assign(JSON.parse(videoMeta), {"videoId": videoId}))
             }
         } // for something that literally should not have worked at all, this code isn't THAT bad. but hey idk.
         //only one endpoint because this whole thing was a hack from the beginning
