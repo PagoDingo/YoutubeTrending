@@ -26,7 +26,7 @@ function getYouTubeTrending() {
             
             /*so, apparently "title" and "description" shows up everywhere on Youtube - who knew?
             sometimes what I thought was video meta, wasn't actually video meta.*/
-            // if runs:text whatever isn't videoMeta, it's not videoMeta.
+            // if 'runs:text' whatever isn't in videoMeta, it's not videoMeta.
             if (videoMeta.includes(`{"runs":[{"text"`)) {
                 //again, like, brackets were missing.
                 //and then I made use of the videoId and like, plugged it back into the metaData
