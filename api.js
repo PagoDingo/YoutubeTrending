@@ -1,8 +1,6 @@
 const request = require('request');
 const express = require('express');
 const server = express();
-const fs = require("fs");
-const { append } = require('express/lib/response');
 
 function getYouTubeTrending() {
     //https://www.npmjs.com/package/request
