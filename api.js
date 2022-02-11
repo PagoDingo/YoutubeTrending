@@ -1,10 +1,7 @@
 const request = require('request');
 const express = require('express');
 const server = express();
-<<<<<<< HEAD
-=======
 
->>>>>>> 3558e55d456fffb09bda36646e50a499923aafc0
 function getYouTubeTrending() {
     //https://www.npmjs.com/package/request
     request('http://www.youtube.com/trending', function (error, response, body) {
