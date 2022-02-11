@@ -1,7 +1,8 @@
 const request = require('request');
 const express = require('express');
 const server = express();
-const fs = require("fs")
+const fs = require("fs");
+const { append } = require('express/lib/response');
 
 function getYouTubeTrending() {
     //https://www.npmjs.com/package/request
@@ -9,26 +10,37 @@ function getYouTubeTrending() {
         
         let list = body.split(`"watchEndpoint":{"videoId":`)
 
-        // for (var i = 0; i < list.length - 1; ++i){
-        //     let chunk = list[i].slice(list[i].length - 1500, list[i].length)
-        //     //videoId
-        //     if(i != 0) 
-        //     {console.log(list[i].slice(0,13));}
-        //     //videoInfo
-        //     console.log(chunk.slice(chunk.indexOf(`"title"`),chunk.indexOf(`,"descriptionSnippet"`)))
-        // }
-        
-        //start server
-        server.listen(3000, () => {
-            console.log('server running')
-    
-            
-            server.use('/', (req,res) => {
-                let chunk = list[1].slice(list[1].length - 1500, list[1].length)
-                res.send(JSON.parse("{" + chunk.slice(chunk.indexOf(`"title"`),chunk.indexOf(`,"descriptionSnippet"`)) + "}"))
+        let trending = []
+            for (var i = 0; i < list.length - 1; ++i) {
+                 //videoId
+                 //if(i != 0) 
+                // {console.log(list[i].slice(0,13));}
+                 //videoInfo
+                 
+                  var chunk = list[i].slice(list[i].length - 1500, list[i].length)
+                 
+                   var json = "{" + chunk.slice(chunk.indexOf(`"title"`),chunk.indexOf(`,"descriptionSnippet"`)) + "}"
+                   if (json.includes(`{"runs":[{"text"`)){
+                    if (json.slice(json.length - 4, json.length) != "}}}}"){
+                        trending.push(JSON.parse(json + "}"))
+                    } else {
+                        trending.push(JSON.parse(json))
+                    }
+
+                   }
+            }
+       
+
+            server.listen(3000, () => {
+                console.log("running")
+
+                server.use("/",(req,res) => {
+                    //res.send(JSON.parse(json))
+                    res.send(trending)
+                })
             })
-        })
-})}
+        }
+    )}
 getYouTubeTrending();
 
 //         fs.writeFile("foo.html",body, () => '')
