@@ -28,14 +28,13 @@ function getYouTubeTrending() {
             sometimes what I thought was video meta, wasn't actually video meta.*/
             // if 'runs:text' whatever isn't in videoMeta, it's not videoMeta.
             if (videoMeta.includes(`{"runs":[{"text"`)) {
-                //again, like, brackets were missing.
-                //and then I made use of the videoId and like, plugged it back into the metaData
+                //again brackets were missing.
                 (videoMeta.slice(videoMeta.length - 4, videoMeta.length) != "}}}}") ?
+                    //adding videoIds
                     trending.push(Object.assign(JSON.parse(videoMeta + "}"), {"videoId": videoId})) :
                     trending.push(Object.assign(JSON.parse(videoMeta), {"videoId": videoId}))
             }
-        } // for something that literally should not have worked at all, this code isn't THAT bad. but hey idk.
-        //only one endpoint because this whole thing was a hack from the beginning
+        }
         server.listen(3000, () => {
             console.log("running")
             server.use("/", (req, res) => res.send(trending))
